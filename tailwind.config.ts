@@ -63,6 +63,10 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backgroundImage: {
+        'gradient-brand': 'var(--gradient-brand)',
+        'gradient-subtle': 'var(--gradient-subtle)',
+      },
       keyframes: {
         "accordion-down": {
           from: {
