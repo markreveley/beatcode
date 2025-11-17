@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     global: "globalThis",
-    "global.Buffer": "Buffer",
+    "window.Buffer": "{}",
   },
   optimizeDeps: {
     include: ["buffer"],
