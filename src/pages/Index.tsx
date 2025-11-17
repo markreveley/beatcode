@@ -18,7 +18,7 @@ const Index = () => {
               Agentic AI for Music & Creative Arts
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl">
-              Exploring Letta agents, intelligent workflows, and the future of AI-assisted music production.
+              agent wrangling for beatmakers
             </p>
           </div>
         </section>
