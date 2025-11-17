@@ -14,7 +14,7 @@ export interface Post {
 }
 
 // Import all markdown files
-const postFiles = import.meta.glob("/src/posts/*.md", { as: "raw", eager: true });
+const postFiles = import.meta.glob("/src/posts/*.md", { query: "?raw", import: "default", eager: true });
 
 export const getAllPosts = (): Post[] => {
   const posts = Object.entries(postFiles).map(([filepath, content]) => {
