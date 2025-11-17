@@ -15,7 +15,7 @@ const Index = () => {
         <section className="bg-gradient-to-br from-accent/5 via-primary/5 to-secondary/5 border-b border-border">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
-              Agentic AI for Music & Creative Arts
+              agent wrangling for beatmakers
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl">
               agent wrangling for beatmakers
