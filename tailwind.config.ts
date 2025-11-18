@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        mono: ['JetBrains Mono', 'IBM Plex Mono', 'Courier New', 'monospace'],
+        sans: ['JetBrains Mono', 'IBM Plex Mono', 'Courier New', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,6 +60,12 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        cream: "#F5E6D3",
+        navy: {
+          DEFAULT: "#1B3A5F",
+          light: "#2D4A6F",
+          dark: "#142A45",
         },
       },
       borderRadius: {
