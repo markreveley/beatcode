@@ -3,12 +3,9 @@ import Footer from "@/components/Footer";
 import PostCard from "@/components/PostCard";
 import Newsletter from "@/components/Newsletter";
 import { getAllPosts } from "@/utils/posts";
-
 const Index = () => {
   const posts = getAllPosts();
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         {/* Hero Section - Technical Diagram Style */}
@@ -18,7 +15,7 @@ const Index = () => {
             <div className="mb-8">
               <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Agentic AI for Music & Creative Arts
+                Agentic Workflows for Music & Creative Arts
               </h1>
             </div>
 
@@ -63,24 +60,13 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {posts.map((post) => (
-              <PostCard
-                key={post.slug}
-                slug={post.slug}
-                title={post.frontmatter.title}
-                date={post.frontmatter.date}
-                description={post.frontmatter.description}
-                tags={post.frontmatter.tags}
-              />
-            ))}
+            {posts.map(post => <PostCard key={post.slug} slug={post.slug} title={post.frontmatter.title} date={post.frontmatter.date} description={post.frontmatter.description} tags={post.frontmatter.tags} />)}
           </div>
 
           <Newsletter />
         </section>
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
