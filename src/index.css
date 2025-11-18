@@ -8,95 +8,103 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Cream background #F5E6D3 */
+    --background: 36 53% 89%;
+    /* Navy text #1B3A5F */
+    --foreground: 210 56% 24%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Cream cards */
+    --card: 36 53% 89%;
+    --card-foreground: 210 56% 24%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 36 53% 89%;
+    --popover-foreground: 210 56% 24%;
 
-    --primary: 270 91% 65%;
-    --primary-foreground: 0 0% 100%;
+    /* Navy primary #1B3A5F */
+    --primary: 210 56% 24%;
+    --primary-foreground: 36 53% 89%;
 
-    --secondary: 187 85% 43%;
-    --secondary-foreground: 0 0% 100%;
+    /* Medium navy #2D4A6F */
+    --secondary: 210 42% 31%;
+    --secondary-foreground: 36 53% 89%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Lighter cream for muted */
+    --muted: 36 40% 85%;
+    --muted-foreground: 210 40% 35%;
 
-    --accent: 280 80% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* Navy accent */
+    --accent: 210 56% 24%;
+    --accent-foreground: 36 53% 89%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 36 53% 89%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 270 91% 65%;
+    /* Navy borders */
+    --border: 210 56% 24%;
+    --input: 210 40% 35%;
+    --ring: 210 56% 24%;
 
-    --radius: 0.75rem;
-    
-    --gradient-brand: linear-gradient(135deg, hsl(280 80% 50%), hsl(270 91% 65%), hsl(187 85% 43%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(270 100% 98%));
+    --radius: 0rem;
 
-    --sidebar-background: 0 0% 98%;
+    --gradient-brand: linear-gradient(135deg, hsl(210 56% 24%), hsl(210 42% 31%));
+    --gradient-subtle: linear-gradient(180deg, hsl(36 53% 89%), hsl(36 40% 85%));
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 36 53% 89%;
+    --sidebar-foreground: 210 56% 24%;
+    --sidebar-primary: 210 56% 24%;
+    --sidebar-primary-foreground: 36 53% 89%;
+    --sidebar-accent: 36 40% 85%;
+    --sidebar-accent-foreground: 210 56% 24%;
+    --sidebar-border: 210 56% 24%;
+    --sidebar-ring: 210 56% 24%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark navy background #142A45 */
+    --background: 210 56% 18%;
+    /* Cream text */
+    --foreground: 36 53% 89%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 56% 18%;
+    --card-foreground: 36 53% 89%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 56% 18%;
+    --popover-foreground: 36 53% 89%;
 
-    --primary: 270 91% 65%;
-    --primary-foreground: 0 0% 100%;
+    /* Cream primary for dark mode */
+    --primary: 36 53% 89%;
+    --primary-foreground: 210 56% 24%;
 
-    --secondary: 187 85% 43%;
-    --secondary-foreground: 0 0% 100%;
+    /* Lighter navy */
+    --secondary: 210 42% 31%;
+    --secondary-foreground: 36 53% 89%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    /* Dark muted */
+    --muted: 210 40% 25%;
+    --muted-foreground: 36 40% 75%;
 
-    --accent: 280 80% 50%;
-    --accent-foreground: 0 0% 100%;
+    /* Cream accent */
+    --accent: 36 53% 89%;
+    --accent-foreground: 210 56% 24%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 36 53% 89%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 270 91% 65%;
-    
-    --gradient-brand: linear-gradient(135deg, hsl(280 80% 50%), hsl(270 91% 65%), hsl(187 85% 43%));
-    --gradient-subtle: linear-gradient(180deg, hsl(222.2 84% 4.9%), hsl(240 80% 10%));
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Cream borders for dark mode */
+    --border: 36 53% 89%;
+    --input: 210 40% 35%;
+    --ring: 36 53% 89%;
+
+    --gradient-brand: linear-gradient(135deg, hsl(36 53% 89%), hsl(36 40% 85%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 56% 18%), hsl(210 56% 24%));
+    --sidebar-background: 210 56% 18%;
+    --sidebar-foreground: 36 53% 89%;
+    --sidebar-primary: 36 53% 89%;
+    --sidebar-primary-foreground: 210 56% 24%;
+    --sidebar-accent: 210 42% 31%;
+    --sidebar-accent-foreground: 36 53% 89%;
+    --sidebar-border: 36 53% 89%;
+    --sidebar-ring: 36 53% 89%;
   }
 }
 
@@ -106,6 +114,34 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
   }
+
+  /* Add Google Font for JetBrains Mono */
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+}
+
+/* Diagonal hatch pattern utility */
+.hatch-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    hsl(var(--foreground) / 0.1) 10px,
+    hsl(var(--foreground) / 0.1) 20px
+  );
+}
+
+/* Box with technical diagram styling */
+.tech-box {
+  border: 2px solid hsl(var(--foreground));
+  background: hsl(var(--background));
+  position: relative;
+}
+
+/* Arrow connector */
+.arrow-right::after {
+  content: '→';
+  font-size: 1.5rem;
+  color: hsl(var(--foreground));
 }

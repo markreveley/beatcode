@@ -11,21 +11,57 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-br from-accent/5 via-primary/5 to-secondary/5 border-b border-border">
+        {/* Hero Section - Technical Diagram Style */}
+        <section className="border-b-2 border-foreground">
           <div className="container mx-auto px-4 py-16 md:py-24">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
-              agent wrangling for beatmakers
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl">
-              agent wrangling for beatmakers
-            </p>
+            {/* Title as a technical label */}
+            <div className="mb-8">
+              <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                Agentic AI for Music & Creative Arts
+              </h1>
+            </div>
+
+            {/* Workflow diagram */}
+            <div className="max-w-4xl mb-8">
+              <div className="text-sm opacity-70 mb-4">WORKFLOW:</div>
+              <div className="flex flex-wrap items-center gap-4 text-lg md:text-xl">
+                <div className="border-2 border-foreground px-4 py-2">
+                  LETTA AGENTS
+                </div>
+                <span className="text-2xl">→</span>
+                <div className="border-2 border-foreground px-4 py-2 hatch-pattern">
+                  MUSIC AI
+                </div>
+                <span className="text-2xl">→</span>
+                <div className="border-2 border-foreground px-4 py-2">
+                  CREATIVE OUTPUT
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="max-w-3xl">
+              <div className="text-sm opacity-70 mb-2">DESCRIPTION:</div>
+              <p className="text-lg md:text-xl">
+                Compact, human-readable tutorials on building stateful AI agents<br className="hidden md:block" />
+                for intelligent music workflows and creative applications.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* Posts Grid */}
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-3xl font-bold mb-8">Latest Posts</h2>
+          <div className="mb-8">
+            <div className="text-sm opacity-70 mb-2">LATEST POSTS:</div>
+            <div className="flex items-center gap-4">
+              <h2 className="text-3xl font-bold">Recent Tutorials</h2>
+              <div className="flex-1 h-[2px] bg-foreground"></div>
+              <div className="text-sm opacity-70">{posts.length} TOTAL</div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {posts.map((post) => (
               <PostCard
