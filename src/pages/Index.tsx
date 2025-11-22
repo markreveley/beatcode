@@ -15,7 +15,7 @@ const Index = () => {
             <div className="mb-8">
               <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Agentic Workflows for Music & Creative Arts
+                Agentic Architecture      
               </h1>
             </div>
 
