@@ -13,7 +13,7 @@ const Header = () => {
             <div className="w-4 h-4 bg-foreground"></div>
           </div>
           <span className="text-xl font-bold tracking-tight">
-            beatcode.ai
+            stratta.dev
           </span>
         </Link>
 
