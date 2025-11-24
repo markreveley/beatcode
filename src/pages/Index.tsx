@@ -14,7 +14,7 @@ const Index = () => {
             {/* Title as a technical label */}
             <div className="mb-8">
               <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">Reliability-first agent architecture on the BEAM     </h1>
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight">Reliability-first agentic architecture on the BEAM                         </h1>
             </div>
 
             {/* Workflow diagram */}
