@@ -41,7 +41,13 @@ const Index = () => {
               <p className="text-lg md:text-xl">
                 
 
-Evals and testing in Elixir, measured and open-sourced<br className="hidden md:block" />
+Evals and testing in Elixir, measured and open-sourced
+
+
+
+
+
+              <br className="hidden md:block" />
                 measured and open-sourced.
               </p>
             </div>
