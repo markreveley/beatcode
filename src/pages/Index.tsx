@@ -14,9 +14,7 @@ const Index = () => {
             {/* Title as a technical label */}
             <div className="mb-8">
               <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                agent wrangling for beatmakers
-              </h1>
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight">Reliability-first agent architecture on the BEAM     </h1>
             </div>
 
             {/* Workflow diagram */}
@@ -41,7 +39,9 @@ const Index = () => {
             <div className="max-w-3xl">
               <div className="text-sm opacity-70 mb-2">DESCRIPTION:</div>
               <p className="text-lg md:text-xl">
-                Reliability-first agent architectures on the BEAM,<br className="hidden md:block" />
+                
+
+Evals and testing in Elixir, measured and open-sourced<br className="hidden md:block" />
                 measured and open-sourced.
               </p>
             </div>
