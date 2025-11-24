@@ -15,7 +15,7 @@ const Index = () => {
             <div className="mb-8">
               <div className="text-sm opacity-70 mb-2">DOMAIN:</div>
               <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Agentic Architecture in Elixir                                                                                                                                                                                                                                    
+                agent wrangling for beatmakers
               </h1>
             </div>
 
@@ -24,15 +24,15 @@ const Index = () => {
               <div className="text-sm opacity-70 mb-4">WORKFLOW:</div>
               <div className="flex flex-wrap items-center gap-4 text-lg md:text-xl">
                 <div className="border-2 border-foreground px-4 py-2">
-                  LETTA AGENTS
+                  BEAM VM
                 </div>
                 <span className="text-2xl">→</span>
                 <div className="border-2 border-foreground px-4 py-2 hatch-pattern">
-                  MUSIC AI
+                  AGENTS
                 </div>
                 <span className="text-2xl">→</span>
                 <div className="border-2 border-foreground px-4 py-2">
-                  CREATIVE OUTPUT
+                  RELIABLE SYSTEMS
                 </div>
               </div>
             </div>
@@ -41,8 +41,8 @@ const Index = () => {
             <div className="max-w-3xl">
               <div className="text-sm opacity-70 mb-2">DESCRIPTION:</div>
               <p className="text-lg md:text-xl">
-                Compact, human-readable tutorials on building stateful AI agents<br className="hidden md:block" />
-                for intelligent music workflows and creative applications.
+                Reliability-first agent architectures on the BEAM,<br className="hidden md:block" />
+                measured and open-sourced.
               </p>
             </div>
           </div>

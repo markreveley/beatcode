@@ -48,8 +48,8 @@ const Footer = () => {
           <div className="space-y-2">
             <div className="text-xs opacity-70">© {new Date().getFullYear()}</div>
             <div className="text-sm">
-              Exploring agentic architectures<br />
-              in creative arts and music
+              Building reliable agent systems<br />
+              on the BEAM platform
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="pt-4 border-t border-primary-foreground/20">
           <div className="text-xs opacity-60">
-            Token-Oriented Object Notation for AI Agents
+            Fault-Tolerant Agent Architectures on Erlang/Elixir
           </div>
         </div>
       </div>
