@@ -38,15 +38,7 @@ const Index = () => {
             {/* Description */}
             <div className="max-w-3xl">
               <div className="text-sm opacity-70 mb-2">DESCRIPTION:</div>
-              <p className="text-lg md:text-xl">
-                
-
-Evals and testing in Elixir, measured and open-sourced
-
-
-
-
-
+              <p className="text-lg md:text-xl">Evals and testing in Elixir, measured and open-sourced
               <br className="hidden md:block" />
                 measured and open-sourced.
               </p>
