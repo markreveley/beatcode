@@ -31,12 +31,47 @@ score.bc ──parse──▶ Score ──compile──▶ [Event] ──┬─�
                                                         └─▶ play / loop
 ```
 
-Timing pipeline inside compile, in **fixed order** (transforms do not
-commute; the order is spec):
+Timing pipeline inside compile, in **fixed order** (§6.2 is the
+normative statement; §6.12 works the examples):
 
 ```
 grid (exact rationals) → swing → time-lane → humanize → performed_s (f64, clamped ≥ 0)
 ```
+
+Read those arrows as an **accumulation order, not a composition**.
+The three transforms do not chain: each one reads the *pristine*
+rational `grid` and returns an f64 offset in seconds, and the offsets
+are then summed in the order drawn.
+
+```
+performed = max(0.0, (((to_f(grid) × spb) + swing_s) + lane_s) + hum_s)
+```
+
+Four things make that order normative:
+
+1. **Every transform is grid-keyed, so chaining them would change
+   which events fire, not just their last bits.** Swing applies only
+   where `grid ÷ sub` is an odd *integer* (§6.5); lane values index
+   `floor_i(grid ÷ div)` — time-indexed, not event-indexed (§6.3).
+   Feed either a shifted clock and swing silently stops matching
+   while lane indices slide. Humanize is the exception: it keys off
+   the step index, so it is order-invariant by construction — which
+   is precisely what the keyed PRNG buys (§4, §6.8).
+2. **Float addition is commutative but not associative.**
+   Re-associating that sum moves the last ulp; `performed_s` is then
+   value-rounded to 6 decimals (§6.10) and used as the primary sort
+   key (§6.11), so a last-ulp difference can shift a printed digit or
+   a tiebreak. Class A is byte-exact, which makes this pass/fail
+   rather than cosmetic. §6.2 pins the association of every f64
+   expression in the pipeline.
+3. **The clamp is terminal, not per-stage.** `max(0.0, …)` runs once,
+   after all three offsets (§6.9), and the itemized
+   `swing_ms`/`lane_ms`/`hum_ms` survive it: `edge.bc` kick step 0
+   lands at `performed_s 0.0` while still reporting `lane_ms −6.0`
+   and `hum_ms 0.462` (§6.12).
+4. **`to_f(grid)` is the only rational→float edge** (§3). Everything
+   upstream of it is exact `i64` rationals; moving a transform to the
+   left of it would put float error into the editable clock (§1.2).
 
 ### 1.2 Dual time
 
@@ -66,14 +101,19 @@ machines too (Class C).
 
 ### 1.4 Determinism rules (binding)
 
-No libm-backed float methods in the render path (`f64::sin/cos/exp/
-tan/powf` lower to platform libm and vary by platform); no
-`mul_add`/FMA; no fast-math; no threads in the render path; scalar or
-fixed-order summation; **no `HashMap` anywhere that touches output
-order** (iteration order is randomized per process); transcendentals
-only at coefficient time via pinned polynomial approximations or
-precomputed constants; pinned toolchain; zero crate dependencies;
-hand-written SHA-256 (FIPS 180-4).
+Each rule closes one specific way a platform, a compiler, or a run
+could otherwise change the bytes:
+
+| Rule | What it closes |
+|---|---|
+| No libm-backed float methods in the render path (`f64::sin/cos/exp/tan/powf`) | they lower to the platform's libm, which is not bit-identical across OS/arch |
+| No `mul_add`/FMA | FMA fuses two roundings into one, so the result depends on whether the compiler contracted the expression |
+| No fast-math | it licenses the compiler to re-associate arithmetic |
+| No threads in the render path; scalar or fixed-order summation | thread interleaving would re-order the mix sum (§9.3) |
+| **No `HashMap` anywhere that touches output order** | iteration order is randomized per process, so even a double render on one machine diverges (§12.4 trap 1) |
+| Transcendentals only at coefficient time, via pinned polynomial approximations or precomputed constants | moves the platform-variable math out of the sample loop and into committed literals (§8.4) |
+| Pinned toolchain; zero crate dependencies | removes codegen drift and upstream dependency drift from the reproducibility surface |
+| Hand-written SHA-256 (FIPS 180-4) | the receipt must not depend on a third-party implementation |
 
 ---
 
@@ -244,8 +284,12 @@ flt = (out as f64) / 18446744073709551616.0      // ÷ 2^64
 ```
 
 The u64→f64 conversion **rounds to nearest (ties even)** — Rust's
-`as f64` does exactly this. Consequence: outputs ≥ 2^64 − 2^10 round
-up to 2^64, so **`flt` returns values in `[0.0, 1.0]` inclusive**.
+`as f64` does exactly this. Consequence: just below 2^64 the f64
+spacing is 2^(64−53) = 2^11, so the two nearest representable values
+are 2^64 − 2^11 and 2^64 itself, putting the midpoint at 2^64 − 2^10.
+Ties go to even and 2^64 has the even significand, so every output
+≥ 2^64 − 2^10 rounds *up* to 2^64 and divides to exactly 1.0 —
+**`flt` returns values in `[0.0, 1.0]` inclusive**.
 Golden: `18446744073709551615 / 2^64 = 1.0`. Downstream this is
 benign (`prob` uses strict `<`; humanize maps 1.0 to a full +hum_ms
 push) but an implementation that "fixes" it to `[0,1)` breaks
@@ -486,7 +530,8 @@ association — no reordering, no FMA.** For `performed` that means
 `(((to_f(grid) × spb) + swing_s) + lane_s) + hum_s`; for `hum_s`,
 `((2·flt − 1) × hum_ms) / 1000`; for `pair_s` in §6.5,
 `(2.0 × to_f(sub)) × spb`. This order is normative — it is what makes
-byte-exactness achievable.
+byte-exactness achievable; §1.1 spells out why each part of it is
+load-bearing.
 
 ### 6.3 Lane indexing — time-indexed, not event-indexed
 
@@ -522,8 +567,20 @@ swing_offset({amount, sub}, grid, spb):
 
 Only events landing **exactly on odd integer multiples** of the
 subdivision are delayed; everything else (even multiples, off-grid
-positions) is untouched. 50 = straight (identity), 66⅔ ≈ triplet,
-upper bound 80. Worked check (`examples/dilla.bc`): 58% at 88 bpm,
+positions) is untouched.
+
+**Where the formula comes from:** `pair_s` is the duration of one
+*pair* of subdivisions, and the odd member of the pair nominally sits
+at its midpoint. Swing relocates that member to `amount/100` of the
+way through the pair, so the delay is just the fraction moved past
+halfway — `(amount/100 − 0.5) × pair_s`. The constants then read
+straight off: 50 → 0, an exact identity on performed times (property
+§11.1.3); 66⅔ → ⅙ of the pair, landing the odd subdivision two-thirds
+of the way through it, i.e. triplet feel; 80 is the validated upper
+bound (§5.2). Even multiples are pair *starts*, which is why they
+never move.
+
+Worked check (`examples/dilla.bc`): 58% at 88 bpm,
 sub 1/16-note = 1/4 beat → `pair = 2 × 0.25 × 60/88 = 0.340909… s`;
 delay `= 0.08 × pair = 0.027272… s` → `swing_ms 27.273` on every odd
 sixteenth — visible throughout `goldens/events/dilla.events.jsonl`.
@@ -747,9 +804,11 @@ Equal-power at center (cos = sin = √2/2 ≈ 0.7071). Pan values beyond
 
 Mix into a dense stereo f64 buffer initialized to zero, adding each
 event's samples in **sorted-event order, frame order within each
-event's buffer**. Order is normative: float addition does not commute
-in rounding, so overlapping events must be summed in exactly this
-order. No reassociation, no SIMD/reduction reordering, no `mul_add`.
+event's buffer**. Order is normative: float addition is
+commutative but **not associative**, so any permutation of overlapping
+events re-associates the sum and changes its rounding; they must be
+summed in exactly this order. No reassociation, no SIMD/reduction
+reordering, no `mul_add`.
 
 ### 9.4 Track length
 
@@ -758,6 +817,12 @@ last  = highest frame index touched
 frames = last + trunc(0.5 × 44100)  = last + 22050        // half-second tail
 empty mix (zero events): frames = 44100                    // one second of silence
 ```
+
+Note the units: `last` is an **index** and `frames` a **count**, so
+the silent tail actually spans `last+1 … last+22049` — 22 049 frames,
+a hair under half a second. That is the reference behavior and it is
+baked into the committed render hashes (§11); do not "correct" it to
+a full 22 050.
 
 ### 9.5 Peak normalization (conditional)
 
@@ -850,6 +915,7 @@ exit non-zero (except inside `loop`, above).
 | `float-semantics.txt` | A¹ | rounding/format/parse rules (probe transcript) |
 | `parser-behaviors.txt` | A² | 42 accept/reject cases with line numbers and event summaries |
 | `semantics-probes.txt` | A | sign-of-zero, pitch serialization, CRLF, suffix, error-shape probes |
+| `renders-v0.1.txt` | C | this implementation's four render sha256s + the recording platform (§11.3 item 7) — **not** a frozen reference vector: it is this build's own output, re-diffed on every push |
 
 ¹ two lines are **expected-to-diverge**: the `ftb(5.0e-7)` formatter
 boundary (§6.10) and the final `pow` probe (transcendental —
@@ -946,7 +1012,9 @@ One routine serves §6.10 value-rounding (n = 3, 6, 2) and §7
 formatting (n = 6 + compact trim). Domain: finite `x` with
 **|x| ≤ 2^53 / 10^n** (all pipeline values qualify by orders of
 magnitude; outside that domain the final conversion is no longer
-exact — assert or error there):
+exact — assert or error there, but see `SPEC-GAPS.md` §1: probe §E8
+records the oracle *keeping* the value out there, and that is the
+posture this implementation adopts):
 
 ```
 decompose: x = sign · m · 2^e   with 2^52 ≤ m < 2^53 (normal),  e ≤ 0
