@@ -32,6 +32,11 @@ patterns for the differential comparisons.
 Trust marker: `#print axioms` on every theorem. Standard is
 `[propext, Classical.choice, Quot.sound]` or fewer. A theorem that lists a
 `<name>._native.native_decide.ax_*` or `_native.bv_decide.ax_*` axiom
-rests on Lean's compiled code (the sha256 `Tests.lean` vectors and the
-`rotr`/`ch`/`maj` identities do; nothing in `prng/`, `decfmt/`,
-`rational/` or `kernel-checks/` does).
+rests on Lean's compiled code. The sha256 `Tests.lean` vectors, the
+`rotr`/`ch`/`maj` identities and `synthb`'s `xorshift31_inv` do, as do two
+deliberately labelled one-line probes of the mechanism
+(`rational/Rational.lean:Rat64.floor_i_neg_quarter_native`, beside its
+kernel-`decide` twin, and `kernel-checks/Smoke.lean:sm_step`); nothing
+else in `prng/`, `decfmt/`, `rational/` or `kernel-checks/` does. An
+independent refuter re-scanned every constant in every module with
+`Lean.collectAxioms` and found exactly those.
