@@ -1,0 +1,10 @@
+name = "proj"
+version = "0.1.0"
+defaultTargets = ["proj"]
+
+[[lean_lib]]
+name = "Sha256"
+
+[[lean_exe]]
+name = "proj"
+root = "Main"

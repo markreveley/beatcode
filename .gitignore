@@ -1,2 +1,7 @@
 /target
 /renders
+# lean-spike scratch output (oleans, logs, cargo targets, run artifacts)
+docs/lean-spike/**/build/
+docs/lean-spike/**/.lake/
+docs/lean-spike/**/rs/target/
+docs/lean-spike/**/lean_out*.txt
